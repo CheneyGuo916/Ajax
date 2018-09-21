@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax</title>
+	<script src="jquery-3.3.1/jquery-3.3.1.min.js"></script>
+	<script>
+		//兼容浏览器
+		function createXHR(){
+			if (typeof XMLHttpRequest != 'undefined') {
+				return new XMLHttpRequest();
+			}
+			//IE7及以下
+			// else if (typeof ActiveXObject!='undefined') {
+			// 	if (typeof arguments.callee.activeXString!='string') {
+			// 		var versions = ['MSXML2.XMLHttp.6.0','MSXML2.XNLHttp.3.0','MSXML2.XMLHttp'],i,len;
+			// 		for (i=0,len=versions.length; i<len; i++) {
+			// 			try {
+			// 				new ActiveXObject(versions[i]);
+			// 				arguments.callee.activeXString = versions[i];
+			// 				break;
+			// 			} catch(e) {
+			// 				// statements
+							
+			// 			}
+			// 		}
+			// 	}
+			// 	return new ActiveXObject(arguments.callee.activeXString);
+			// }
+			else{
+				throw new Error("NO XHR object available.");
+			}
+		}
+		var xhr = createXHR();
+		xhr.onreadystatechange =function(){
+			if (xhr.readyState==4) {
+			if ((xhr.status>=200&&xhr.status<300)||xhr.status==304) {
+			alert(xhr.responseText);
+		    }else {
+			alert('Request was unsuccessful:'+xhr.status);
+		    }
+		  }
+		};
+		xhr.open('get','http://120.78.164.247:9999/user/findAll', false);
+		//自定义请求头部
+		// xhr.setRequestHeader('MyHeader', 'MyValue');
+		//设置超时设定,仅适用于IE8+
+		// xhr.timeout = 2000;//毫秒
+		// xhr.ontimeout = function(){
+		// 	alert("Don't return");
+		// }
+		xhr.send(null);
+		//获取自定义响应头部
+		// var myHeader = xhr.getResponseHeader('MyHeader');
+		var allHeaders = xhr.getAllResponseHeaders()
+		// console.log(myHeader);
+		console.log(allHeaders);
+		
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
